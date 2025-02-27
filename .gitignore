@@ -3,4 +3,8 @@ bin/*
 pyvenv.cfg
 
 *.log
+*.venv/
+**/__pycache__/
+*.py[cod]
 
+compiled/*

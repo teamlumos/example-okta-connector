@@ -28,6 +28,7 @@ logger = logging.getLogger(__name__)
 async def validate_credentials(
     args: ValidateCredentialsRequest,
 ) -> ValidateCredentialsResponse:
+    logger.info(f"Validating credentials")
     async with OktaClient(args) as client:
         #_ = await client.get_users()
         return ValidateCredentialsResponse(

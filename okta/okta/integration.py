@@ -1,5 +1,5 @@
 import httpx
-from connector.generated import OAuthCredential
+from connector.generated import BasicCredential
 from connector.oai.capability import StandardCapabilityName
 from connector.oai.errors import HTTPHandler
 from connector.oai.integration import DescriptionData, Integration
@@ -13,7 +13,7 @@ from okta import capabilities_read, capabilities_write
 integration = Integration(
     app_id="okta",
     version=__version__,
-    auth=OAuthCredential,
+    auth=BasicCredential,
     exception_handlers=[
         (httpx.HTTPStatusError, HTTPHandler, None),
     ],
