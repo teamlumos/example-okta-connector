@@ -1,5 +1,5 @@
 import httpx
-from connector.generated import BasicCredential
+from connector.generated import TokenCredential
 from connector.oai.capability import StandardCapabilityName
 from connector.oai.errors import HTTPHandler
 from connector.oai.integration import DescriptionData, Integration
@@ -13,7 +13,7 @@ from okta import capabilities_read, capabilities_write
 integration = Integration(
     app_id="okta",
     version=__version__,
-    auth=BasicCredential,
+    auth=TokenCredential,
     exception_handlers=[
         (httpx.HTTPStatusError, HTTPHandler, None),
     ],
@@ -29,7 +29,7 @@ integration.register_capabilities(
     {
         # Read capabilities
         StandardCapabilityName.VALIDATE_CREDENTIALS: capabilities_read.validate_credentials,
-        # StandardCapabilityName.LIST_ACCOUNTS: capabilities_read.list_accounts,
+        StandardCapabilityName.LIST_ACCOUNTS: capabilities_read.list_accounts,
         # StandardCapabilityName.LIST_RESOURCES: capabilities_read.list_resources,
         # StandardCapabilityName.LIST_ENTITLEMENTS: capabilities_read.list_entitlements,
         # StandardCapabilityName.FIND_ENTITLEMENT_ASSOCIATIONS: capabilities_read.find_entitlement_associations,
@@ -38,8 +38,8 @@ integration.register_capabilities(
         # StandardCapabilityName.ASSIGN_ENTITLEMENT: capabilities_write.assign_entitlement,
         # StandardCapabilityName.UNASSIGN_ENTITLEMENT: capabilities_write.unassign_entitlement,
         # StandardCapabilityName.CREATE_ACCOUNT: capabilities_write.create_account,
-        # StandardCapabilityName.ACTIVATE_ACCOUNT: capabilities_write.activate_account,
-        # StandardCapabilityName.DEACTIVATE_ACCOUNT: capabilities_write.deactivate_account,
+        StandardCapabilityName.ACTIVATE_ACCOUNT: capabilities_write.activate_account,
+        StandardCapabilityName.DEACTIVATE_ACCOUNT: capabilities_write.deactivate_account,
         # StandardCapabilityName.DELETE_ACCOUNT: capabilities_write.delete_account,
     }
 )

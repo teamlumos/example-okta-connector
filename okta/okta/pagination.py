@@ -15,13 +15,13 @@ MAX_PAGE_SIZE = 500
 class Pagination(PaginationBase):
     """Pagination parameters for API methods."""
 
-    offset: int
+    after: str | None
 
     @classmethod
     def default(cls, endpoint: str) -> "Pagination":
         return cls(
             endpoint=endpoint,
-            offset=0,
+            after=None,
         )
 
 

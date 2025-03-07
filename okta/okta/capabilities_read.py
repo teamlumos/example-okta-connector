@@ -29,11 +29,12 @@ async def validate_credentials(
     args: ValidateCredentialsRequest,
 ) -> ValidateCredentialsResponse:
     logger.info(f"Validating credentials")
+    settings = get_settings(args, OktaSettings)
     async with OktaClient(args) as client:
-        #_ = await client.get_users()
+        _ = await client.get_users()
         return ValidateCredentialsResponse(
             response=ValidatedCredentials(
-                unique_tenant_id="REPLACE_WITH_UNIQUE_TENANT_ID",
+                unique_tenant_id=settings.account_id,
                 valid=True,
             ),
         )
@@ -49,18 +50,17 @@ async def list_accounts(args: ListAccountsRequest) -> ListAccountsResponse:
     page_size = get_page(args).size or DEFAULT_PAGE_SIZE
     async with OktaClient(args) as client:
         response = await client.get_users(
-            limit=page_size, offset=current_pagination.offset,
+            limit=page_size, after=current_pagination.after,
         )
         accounts: list[FoundAccountData] = response.to_accounts()
 
         next_pagination = []
-        if True:
-            next_pagination.append(
-                Pagination(
-                    endpoint=endpoint,
-                    offset=current_pagination.offset + len(accounts),
-                )
+        next_pagination.append(
+            Pagination(
+                endpoint=endpoint,
+                after=response.after,
             )
+        )
 
         next_page_token = NextPageToken.from_paginations(next_pagination).token
 

@@ -26,3 +26,14 @@ entitlement_types: list[EntitlementType] = [
         # max=1,
     )
 ]
+class OktaEndpoint(str, Enum):
+    # https://developer.okta.com/docs/api/openapi/okta-management/management/tag/User/#tag/User/operation/listUsers
+    USERS = "/api/v1/users"
+    # https://developer.okta.com/docs/api/openapi/okta-management/management/tag/User/#tag/User/operation/getUser
+    USER = "/api/v1/users/{user_id}"
+    # https://developer.okta.com/docs/api/openapi/okta-management/management/tag/UserLifecycle/#tag/UserLifecycle/operation/suspendUser
+    SUSPEND_USER = "/api/v1/users/{user_id}/lifecycle/suspend"
+    # https://developer.okta.com/docs/api/openapi/okta-management/management/tag/UserLifecycle/#tag/UserLifecycle/operation/activateUser
+    ACTIVATE_USER = "/api/v1/users/{user_id}/lifecycle/activate"
+    # https://developer.okta.com/docs/api/openapi/okta-management/management/tag/UserLifecycle/#tag/UserLifecycle/operation/unsuspendUser
+    UNSUSPEND_USER = "/api/v1/users/{user_id}/lifecycle/unsuspend"
