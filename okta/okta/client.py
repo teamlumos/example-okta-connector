@@ -7,7 +7,7 @@ from connector.utils.httpx_auth import BearerAuth
 from connector.utils.client_utils import create_client_response
 import httpx
 from okta.enums import OktaEndpoint
-from okta.models import User, UsersResponse
+from okta.models import User, UsersResponse, UserRolesResponse
 from okta.settings import OktaSettings
 from urllib.parse import ParseResult, urlparse, parse_qs
 
@@ -58,6 +58,12 @@ class OktaClient(BaseIntegrationClient):
         response = await self._http_client.post(OktaEndpoint.ACTIVATE_USER.format(user_id=user_id))
         response.raise_for_status()
         logger.info(f"User activated: {user_id}")
+
+    async def get_user_roles(self, user_id: str) -> UserRolesResponse:
+        logger.info(f"Getting user roles: {user_id}")
+        response = await self._http_client.get(OktaEndpoint.USER_ROLES.format(user_id=user_id))
+        logger.info(f"User roles: {response.json()}")
+        return create_client_response(response, UserRolesResponse)
 
 def parse_next_link(response: httpx.Response) -> str | None:
     # returns the id that should be used for the next page of results

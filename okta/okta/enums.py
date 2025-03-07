@@ -37,3 +37,5 @@ class OktaEndpoint(str, Enum):
     ACTIVATE_USER = "/api/v1/users/{user_id}/lifecycle/activate"
     # https://developer.okta.com/docs/api/openapi/okta-management/management/tag/UserLifecycle/#tag/UserLifecycle/operation/unsuspendUser
     UNSUSPEND_USER = "/api/v1/users/{user_id}/lifecycle/unsuspend"
+    # https://developer.okta.com/docs/api/openapi/okta-management/management/tag/RoleAssignmentAUser/#tag/RoleAssignmentAUser/operation/listAssignedRolesForUser
+    USER_ROLES = "/api/v1/users/{user_id}/roles"

@@ -1,7 +1,7 @@
 from enum import Enum
 from pydantic import BaseModel
-
-from connector.generated import FoundAccountData, AccountStatus, AccountType
+from okta.enums import OktaEntitlementTypes
+from connector.generated import FoundAccountData, AccountStatus, AccountType, FoundEntitlementAssociation, FoundEntitlementData
 
 
 class PaginatedOktaResponse(BaseModel):
@@ -63,4 +63,32 @@ class UsersResponse(PaginatedOktaResponse):
 
     def to_accounts(self) -> list[FoundAccountData]:
         return [user.to_account_data() for user in self.root]
+    
+
+class UserRole(BaseModel):
+    id: str
+    label: str
+    type: str
+    status: str
+    created: str
+    lastUpdated: str
+    assignmentType: str
+
+class UserRolesResponse(BaseModel):
+    root: list[UserRole]
+
+    def to_found_entitlement_associations(self, user_id: str) -> list[FoundEntitlementAssociation]:
+        return [FoundEntitlementAssociation(
+            account_id=user_id,
+            integration_specific_entitlement_id=role.id,
+            integration_specific_resource_id="",
+        ) for role in self.root]
+    
+    def to_found_entitlement_data(self) -> list[FoundEntitlementData]:
+        return [FoundEntitlementData(
+            entitlement_type=OktaEntitlementTypes.GLOBAL_ROLE,
+            integration_specific_id=role.id,
+            integration_specific_resource_id="",
+            label=role.label,
+        ) for role in self.root]
     

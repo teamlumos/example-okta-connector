@@ -31,8 +31,8 @@ integration.register_capabilities(
         StandardCapabilityName.VALIDATE_CREDENTIALS: capabilities_read.validate_credentials,
         StandardCapabilityName.LIST_ACCOUNTS: capabilities_read.list_accounts,
         # StandardCapabilityName.LIST_RESOURCES: capabilities_read.list_resources,
-        # StandardCapabilityName.LIST_ENTITLEMENTS: capabilities_read.list_entitlements,
-        # StandardCapabilityName.FIND_ENTITLEMENT_ASSOCIATIONS: capabilities_read.find_entitlement_associations,
+        StandardCapabilityName.LIST_ENTITLEMENTS: capabilities_read.list_entitlements,
+        StandardCapabilityName.FIND_ENTITLEMENT_ASSOCIATIONS: capabilities_read.find_entitlement_associations,
         # StandardCapabilityName.GET_LAST_ACTIVITY: capabilities_read.get_last_activity,
         # Write capabilities
         # StandardCapabilityName.ASSIGN_ENTITLEMENT: capabilities_write.assign_entitlement,
