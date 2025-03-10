@@ -30,3 +30,15 @@ At this point you should be able to run a command like
 This project can be used as an example of how to build a connector or to experiment with a working connector. 
 See the [Developer Docs](https://developers.lumos.com/docs/connector-sdk-1) for more information about building
 and using connectors.
+
+To run this connector within an agent, ensure you have docker installed on your system. Then run
+
+`./scripts/run_compile_in_docker.sh`
+
+Then run 
+
+`docker build -f test-agent.Dockerfile . --progress=plain --platform linux/amd64 -t test-agent` 
+
+This will build a docker image based on the lumos agent docker image that includes the test okta custom connector. To run the image, run
+
+`docker run -e LUMOS_ON_PREMISE_AGENT_API_KEY={your_api_key} test-agent`
