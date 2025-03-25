@@ -44,36 +44,27 @@ async def validate_credentials(
 
 
 async def list_accounts(args: ListAccountsRequest) -> ListAccountsResponse:
-    endpoint = "/users"
     try:
-        current_pagination = NextPageToken(get_page(args).token).paginations()[0]
-    except IndexError:
-        current_pagination = Pagination.default(endpoint)
+        after = get_page(args).token
+    except Exception:
+        after = None
 
     page_size = get_page(args).size or DEFAULT_PAGE_SIZE
     async with OktaClient(args) as client:
         response = await client.get_users(
-            limit=page_size, after=current_pagination.after,
+            limit=page_size, after=after,
         )
         accounts: list[FoundAccountData] = response.to_accounts()
 
-        next_pagination = []
-        next_pagination.append(
-            Pagination(
-                endpoint=endpoint,
-                after=response.after,
-            )
-        )
-
-        next_page_token = NextPageToken.from_paginations(next_pagination).token
+        token = response.after
 
     return ListAccountsResponse(
         response=accounts,
         page=Page(
-            token=next_page_token,
+            token=token,
             size=page_size,
         )
-        if next_page_token
+        if token
         else None,
     )
 
@@ -124,17 +115,16 @@ async def _get_entitlements_for_user(
 async def find_entitlement_associations(
     args: FindEntitlementAssociationsRequest,
 ) -> FindEntitlementAssociationsResponse:
-    users_endpoint = "/users"
     try:
-        current_pagination = NextPageToken(get_page(args).token).paginations()[0]
-    except IndexError:
-        current_pagination = Pagination.default(users_endpoint)
+        after = get_page(args).token
+    except Exception:
+        after = None
 
     page_size = get_page(args).size or DEFAULT_PAGE_SIZE
     entitlement_associations: list[FoundEntitlementAssociation] = []
     async with OktaClient(args) as client:
         users_response = await client.get_users(
-            limit=page_size, after=current_pagination.after,
+            limit=page_size, after=after,
         )
         for user in users_response.to_accounts():
             response = await client.get_user_roles(
@@ -144,21 +134,16 @@ async def find_entitlement_associations(
             entitlements: list[FoundEntitlementAssociation] = response.to_found_entitlement_associations(user.integration_specific_id)
             entitlement_associations.extend(entitlements)
 
-    next_pagination = []
-    next_pagination.append(
-            Pagination(
-                endpoint=users_endpoint,
-                after=users_response.after,
-            )
-        )
+    token = users_response.after
 
-    next_page_token = NextPageToken.from_paginations(next_pagination).token
     return FindEntitlementAssociationsResponse(
         response=entitlement_associations,
         page=Page(
-            token=next_page_token,
+            token=token,
             size=page_size,
         )
+        if token
+        else None,
     )
 
 async def get_last_activity(args: GetLastActivityRequest) -> GetLastActivityResponse:

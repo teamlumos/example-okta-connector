@@ -31,6 +31,7 @@ class OktaClient(BaseIntegrationClient):
             params["after"] = after
         if limit:
             params["limit"] = str(limit)
+        logger.info(f"Getting users with params: {params}")
         response = await self._http_client.get(OktaEndpoint.USERS, params=params)
         client_response = create_client_response(response, UsersResponse)
         client_response.after = parse_next_link(response)

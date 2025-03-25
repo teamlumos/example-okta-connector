@@ -8,7 +8,7 @@ from connector.utils.pagination import (
     create_next_page_token,
 )
 
-DEFAULT_PAGE_SIZE = 5
+DEFAULT_PAGE_SIZE = 100
 MAX_PAGE_SIZE = 500
 
 
@@ -33,6 +33,6 @@ if t.TYPE_CHECKING:
             return cls(token=None)
 
         def paginations(self) -> list[Pagination]:
-            return []
+            return [Pagination(endpoint=None, after=self.token)]
 else:
     NextPageToken = create_next_page_token(Pagination, "NextPageToken")
