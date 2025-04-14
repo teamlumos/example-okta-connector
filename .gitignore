@@ -6,5 +6,6 @@ pyvenv.cfg
 *.venv/
 **/__pycache__/
 *.py[cod]
+**/.egg-info/
 
 compiled/*

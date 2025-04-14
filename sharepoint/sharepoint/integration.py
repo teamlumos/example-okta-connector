@@ -15,6 +15,15 @@ def get_token_url(args: AuthRequest) -> str:
     settings = get_settings(args, SharepointSettings)
     return f"https://login.microsoftonline.com/{settings.tenant_id}/oauth2/v2.0/token"
 
+"""
+In order to test an integration with Client Credentials Grant within the swagger ui, you need to:
+    1. Start the http server by running `{connector-name} hacking http-server`
+    2. Go to localhost:8000/docs
+    3. Make a request to the Handle Client Credentials Request standard capability with the client secret, client id, and scopes
+    4. You should see a 200 status code and a token in the response
+    5. Copy the token and use this as the access_token in requests to other
+
+"""
 
 integration = Integration(
     app_id="sharepoint",

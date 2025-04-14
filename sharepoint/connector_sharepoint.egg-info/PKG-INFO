@@ -1,7 +1,7 @@
 Metadata-Version: 2.4
-Name: connector-okta
+Name: connector-sharepoint
 Version: 0.1.0
-Summary: A CLI Tool, HTTP server, and Package to Perform Actions on Okta
+Summary: A CLI Tool, HTTP server, and Package to Perform Actions on Sharepoint
 Author-email: Damon Salm <damon@lumos.com>
 License: 
                                          Apache License
@@ -230,13 +230,13 @@ Requires-Dist: pytest-cases>=3; extra == "dev"
 Requires-Dist: pytest-httpx>=0.33; extra == "dev"
 Requires-Dist: mypy~=1.10; extra == "dev"
 Provides-Extra: all
-Requires-Dist: connector-okta[dev,fastapi]; extra == "all"
+Requires-Dist: connector-sharepoint[dev,fastapi]; extra == "all"
 Dynamic: license-file
 
-# Okta Connector
+# Sharepoint Connector
 
-[![PyPI - Version](https://img.shields.io/pypi/v/connector-okta.svg)](https://pypi.org/project/connector-okta)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/connector-okta.svg)](https://pypi.org/project/connector-okta)
+[![PyPI - Version](https://img.shields.io/pypi/v/connector-sharepoint.svg)](https://pypi.org/project/connector-sharepoint)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/connector-sharepoint.svg)](https://pypi.org/project/connector-sharepoint)
 
 -----
 
@@ -277,19 +277,19 @@ List of implemented capabilities:
 
 ## Installation
 
-If this connector is in the Lumos monorepo, ensure `connector-okta` is added
+If this connector is in the Lumos monorepo, ensure `connector-sharepoint` is added
 to the top level `pyproject.toml` file. Otherwise:
 
 ```console
-pip install connector-okta[dev,fastapi]
+pip install connector-sharepoint[dev,fastapi]
 ```
 
-If you want the HTTP server, `pip install connector-okta[fastapi]`
+If you want the HTTP server, `pip install connector-sharepoint[fastapi]`
 
 If you're on Mac, you'll need to escape the square brackets in your ZSH shell:
 
 ```console
-pip install connector-okta\[dev,fastapi\]
+pip install connector-sharepoint\[dev,fastapi\]
 ```
 
 ## Usage
@@ -299,12 +299,12 @@ The package can be used in three ways:
 2. A library to create custom connector
 3. A library to convert your custom connector code to a FastAPI HTTP server
 
-To get started, run `okta --help`
+To get started, run `sharepoint --help`
 
 An example of running a command that accepts arguments:
 
 ```shell
-okta info --json '{"a": 1}'
+sharepoint info --json '{"a": 1}'
 ```
 
 ### Hacking
@@ -312,13 +312,13 @@ okta info --json '{"a": 1}'
 There are some positional arguments under the "hacking" command for ease of development.
 
 ```console
-okta hacking --help
+sharepoint hacking --help
 ```
 
 For instance, you can spin up a FastAPI server with the following command:
 
 ```console
-okta hacking http-server
+sharepoint hacking http-server
 ```
 
 If you navigate to http://localhost:8000/docs, you'll be able to run a Swagger UI to test your
@@ -326,7 +326,7 @@ endpoints.
 
 ## License
 
-`connector-okta` is distributed under the terms of the [Apache 2.0](./LICENSE.txt) license.
+`connector-sharepoint` is distributed under the terms of the [Apache 2.0](./LICENSE.txt) license.
 
 ## Authentication
 Here you should describe how to authenticate with the service. For example, if the service uses API keys, you should provide instructions on how to generate and use them.
